@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IPL Match Predictor — CONVOLUTE'26</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="container nav-inner">
+    <div class="nav-logo">IPL PREDICTOR</div>
+    <div class="nav-badge">CONVOLUTE'26 · MLCOE</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Machine Learning · Sports Analytics</div>
+    <h1 class="hero-title">PREDICT THE<br><span>MATCH</span></h1>
+    <p class="hero-sub">Enter match conditions and get an AI-powered Win/Loss prediction using an ensemble of 4 trained ML models on 50,400 IPL records.</p>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="container">
+  <div class="stats-strip">
+    <div class="stat"><div class="stat-val">50,400</div><div class="stat-label">Training Records</div></div>
+    <div class="stat"><div class="stat-val">4</div><div class="stat-label">ML Models</div></div>
+    <div class="stat"><div class="stat-val">~87%</div><div class="stat-label">Accuracy</div></div>
+    <div class="stat"><div class="stat-val">18</div><div class="stat-label">Features Used</div></div>
+    <div class="stat"><div class="stat-val">10</div><div class="stat-label">IPL Teams</div></div>
+  </div>
+</div>
+
+<!-- PREDICTOR -->
+<section class="predictor">
+  <div class="container">
+    <div class="section-label">Live Prediction Engine</div>
+    <div class="section-title">RUN THE MODEL</div>
+
+    <div class="pred-grid">
+      <!-- FORM -->
+      <div class="form-card">
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label>Your Team</label>
+            <select id="team">
+              <option value="">Select team</option>
+              <option>CSK</option><option>MI</option><option>RCB</option>
+              <option>KKR</option><option>DC</option><option>SRH</option>
+              <option>RR</option><option>PBKS</option><option>GT</option><option>LSG</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Opposition</label>
+            <select id="opposition">
+              <option value="">Select opponent</option>
+              <option>CSK</option><option>MI</option><option>RCB</option>
+              <option>KKR</option><option>DC</option><option>SRH</option>
+              <option>RR</option><option>PBKS</option><option>GT</option><option>LSG</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Pitch Condition</label>
+            <select id="pitch">
+              <option value="flat">Flat</option>
+              <option value="fresh">Fresh</option>
+              <option value="dry">Dry</option>
+              <option value="seaming">Seaming</option>
+              <option value="spin_friendly">Spin Friendly</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Crowd Support</label>
+            <select id="crowd">
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label>Avg Batting Score &nbsp;<span style="color:var(--accent);font-family:var(--font-mono)" id="batting-display">163</span></label>
+            <div class="range-wrap">
+              <input type="range" id="batting" min="42" max="290" value="163" oninput="document.getElementById('batting-display').textContent=this.value"/>
+            </div>
+          </div>
+
+          <div class="form-group full">
+            <label>Bowling Economy &nbsp;<span style="color:var(--accent);font-family:var(--font-mono)" id="economy-display">8.7</span></label>
+            <div class="range-wrap">
+              <input type="range" id="economy" min="5" max="12.5" step="0.1" value="8.7" oninput="document.getElementById('economy-display').textContent=parseFloat(this.value).toFixed(1)"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Powerplay Runs &nbsp;<span style="color:var(--accent);font-family:var(--font-mono)" id="pp-display">48</span></label>
+            <div class="range-wrap">
+              <input type="range" id="powerplay" min="20" max="90" value="48" oninput="document.getElementById('pp-display').textContent=this.value"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Death Over Runs &nbsp;<span style="color:var(--accent);font-family:var(--font-mono)" id="death-display">55</span></label>
+            <div class="range-wrap">
+              <input type="range" id="death" min="10" max="100" value="55" oninput="document.getElementById('death-display').textContent=this.value"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Recent Wins (last 5) &nbsp;<span style="color:var(--accent);font-family:var(--font-mono)" id="wins-display">3</span></label>
+            <div class="range-wrap">
+              <input type="range" id="recentwins" min="0" max="5" value="3" oninput="document.getElementById('wins-display').textContent=this.value"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Opposition Rank &nbsp;<span style="color:var(--accent);font-family:var(--font-mono)" id="rank-display">5</span></label>
+            <div class="range-wrap">
+              <input type="range" id="opprank" min="1" max="10" value="5" oninput="document.getElementById('rank-display').textContent=this.value"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Avg Partnership &nbsp;<span style="color:var(--accent);font-family:var(--font-mono)" id="partner-display">48</span></label>
+            <div class="range-wrap">
+              <input type="range" id="partnership" min="12" max="85" value="48" oninput="document.getElementById('partner-display').textContent=this.value"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Fielding Errors &nbsp;<span style="color:var(--accent);font-family:var(--font-mono)" id="errors-display">2</span></label>
+            <div class="range-wrap">
+              <input type="range" id="errors" min="0" max="10" value="2" oninput="document.getElementById('errors-display').textContent=this.value"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Extras Conceded &nbsp;<span style="color:var(--accent);font-family:var(--font-mono)" id="extras-display">14</span></label>
+            <div class="range-wrap">
+              <input type="range" id="extras" min="0" max="28" value="14" oninput="document.getElementById('extras-display').textContent=this.value"/>
+            </div>
+          </div>
+
+          <div class="form-group" style="display:flex;flex-direction:row;align-items:center;gap:12px;padding-top:8px;">
+            <label style="margin:0">Toss Won</label>
+            <input type="checkbox" id="toss" style="width:18px;height:18px;accent-color:var(--accent);cursor:pointer;border:none;padding:0;background:transparent;"/>
+          </div>
+
+          <div class="form-group" style="display:flex;flex-direction:row;align-items:center;gap:12px;padding-top:8px;">
+            <label style="margin:0">Home Ground</label>
+            <input type="checkbox" id="home" checked style="width:18px;height:18px;accent-color:var(--accent);cursor:pointer;border:none;padding:0;background:transparent;"/>
+          </div>
+
+          <div class="form-group" style="display:flex;flex-direction:row;align-items:center;gap:12px;padding-top:8px;">
+            <label style="margin:0">Dew Factor</label>
+            <input type="checkbox" id="dew" style="width:18px;height:18px;accent-color:var(--accent);cursor:pointer;border:none;padding:0;background:transparent;"/>
+          </div>
+
+        </div>
+
+        <button class="predict-btn" onclick="predict()">PREDICT MATCH</button>
+      </div>
+
+      <!-- RESULT PANEL -->
+      <div class="result-panel">
+        <div class="result-idle" id="result-idle">
+          <div class="result-idle-icon">&#9654;</div>
+          <p>Fill in the match conditions and click <strong>Predict Match</strong> to see the AI prediction.</p>
+        </div>
+
+        <div class="result-active" id="result-active">
+          <div class="result-conf-label">PREDICTION</div>
+          <div class="result-verdict" id="verdict-text">WIN</div>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:16px;" id="verdict-sub">Model ensemble agrees</div>
+
+          <div class="result-conf-label">CONFIDENCE</div>
+          <div class="conf-bar-bg">
+            <div class="conf-bar" id="conf-bar" style="width:0%"></div>
+          </div>
+          <div style="font-family:var(--font-mono);font-size:20px;margin-bottom:24px;" id="conf-pct">0%</div>
+
+          <div class="factors">
+            <div class="factors-title">Key Factors</div>
+            <div id="factors-list"></div>
+          </div>
+
+          <div class="model-scores">
+            <div class="factors-title">Model Votes</div>
+            <div id="model-votes"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="container">
+    <div class="section-label">Under the Hood</div>
+    <div class="section-title">HOW IT WORKS</div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-title">Feature Engineering</div>
+        <div class="step-desc">Raw inputs are encoded, scaled with RobustScaler, and combined into interaction features like batting × powerplay.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-title">4 Models Vote</div>
+        <div class="step-desc">Logistic Regression, Decision Tree, Random Forest, and XGBoost each independently predict Win or Loss.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-title">Ensemble Decision</div>
+        <div class="step-desc">Weighted average of all 4 model probabilities. Random Forest and XGBoost carry higher weight due to better F1 scores.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-title">Confidence Score</div>
+        <div class="step-desc">The final probability is shown as confidence. Above 60% is a strong signal. Below 55% indicates a close match.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODELS -->
+<section class="models-section">
+  <div class="container">
+    <div class="section-label">Model Performance</div>
+    <div class="section-title">TRAINED MODELS</div>
+    <div class="models-grid">
+      <div class="model-card">
+        <div class="model-card-name">Logistic Regression</div>
+        <div class="model-card-type">Linear · Baseline</div>
+        <div class="metric-chips">
+          <div class="chip">F1 <span>~0.78</span></div>
+          <div class="chip">AUC <span>~0.82</span></div>
+          <div class="chip">Weight <span>0.15</span></div>
+        </div>
+      </div>
+      <div class="model-card">
+        <div class="model-card-name">Decision Tree</div>
+        <div class="model-card-type">Tree · Interpretable</div>
+        <div class="metric-chips">
+          <div class="chip">F1 <span>~0.80</span></div>
+          <div class="chip">AUC <span>~0.83</span></div>
+          <div class="chip">Weight <span>0.20</span></div>
+        </div>
+      </div>
+      <div class="model-card">
+        <div class="model-card-name">Random Forest</div>
+        <div class="model-card-type">Ensemble · Best F1</div>
+        <div class="metric-chips">
+          <div class="chip">F1 <span>~0.86</span></div>
+          <div class="chip">AUC <span>~0.91</span></div>
+          <div class="chip">Weight <span>0.35</span></div>
+        </div>
+      </div>
+      <div class="model-card">
+        <div class="model-card-name">XGBoost</div>
+        <div class="model-card-type">Gradient Boosting · Fast</div>
+        <div class="metric-chips">
+          <div class="chip">F1 <span>~0.85</span></div>
+          <div class="chip">AUC <span>~0.90</span></div>
+          <div class="chip">Weight <span>0.30</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    CONVOLUTE'26 · MLCOE · Sports Theme · IPL Match Predictor &nbsp;|&nbsp; Trained on 50,400 records · 4 models · 18 features
+  </div>
+</footer>
+<script src="script.js"></script>
+
+</body>
+</html>
